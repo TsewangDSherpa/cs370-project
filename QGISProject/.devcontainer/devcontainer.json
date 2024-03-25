@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
-	"name": "ai-course-devcontainer",
+	"name": "qgis-project",
 	"build": { 
 		"context": "..",
 		"dockerfile": "../docker/Dockerfile.pytorch"
