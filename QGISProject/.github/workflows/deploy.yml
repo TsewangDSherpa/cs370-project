@@ -1,0 +1,61 @@
+name: deploy
+
+on:
+  # Trigger the workflow on push to main branch
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy-book:
+    runs-on: ubuntu-latest
+    steps:
+      #----------------------------------------------
+      #       check-out repo and set-up python
+      #----------------------------------------------
+      - name: Check out repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+          token: ${{ secrets.AIML_COMMON_CICD_TOKEN }}
+      - name: Cache apt packages
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+            packages: curl git-lfs ffmpeg libsm6 libxext6 graphviz libgraphviz-dev xdg-utils swig gringo  libgraphviz-dev libsndfile1-dev xdg-utils swig gringo gobject-introspection libcairo2-dev libgirepository1.0-dev pkg-config python3-dev python3-gi
+            version: 1.0
+      - name: Set up python
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install -r requirements.txt
+      
+      - name: Build the book
+        shell: bash -l {0}
+        run: |
+          jupyter-book build --path-output standard artificial_intelligence
+      # #----------------------------------------------
+      # #              Build the book for LMS
+      # #----------------------------------------------      
+      # - name: Build the book for LMS
+      #   shell: bash -l {0}
+      #   run: |
+      #     source .venv/bin/activate
+      #     poetry run jupyter-book build --config artificial_intelligence/_config_lms.yml --path-output lms artificial_intelligence  
+
+    # Deploy the book's HTML to gh-pages branch
+      - name: GitHub Pages action
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: standard/_build/html    
+    
+  
+    # # Deploy the book's HTML to gh-pages branch for lms
+    #   - name: GitHub Pages action
+    #     uses: peaceiris/actions-gh-pages@v3
+    #     with:
+    #       github_token: ${{ secrets.GITHUB_TOKEN }}
+    #       publish_dir: lms/_build/html    
+          
