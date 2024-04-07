@@ -1,1 +1,5 @@
-jupyter
+torch
+segment-geospatial 
+leafmap 
+localtileserver
+osgeo
