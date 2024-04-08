@@ -31,3 +31,8 @@ unified-planning[enghines, plot]
 PyGObject==3.40.1
 pytest==6.2.5
 bertviz
+
+
+# Extra Added Modules
+graphviz
+jupyter
