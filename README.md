@@ -17,3 +17,7 @@ Create Jupyter Notebook Server for Local Web Interface (Optional):
 
 - In command line type : jupyter notebook
 - This will open a local server where you have the option to interface
+
+Install Rust and Cargo
+- Rust : https://rustup.rs/
+
