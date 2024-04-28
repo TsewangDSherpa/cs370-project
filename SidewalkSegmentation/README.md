@@ -1,8 +1,6 @@
 ---
-title: Shiny for Python template
-emoji: 🌍
-colorFrom: yellow
-colorTo: indigo
+title: Sidewalk Segmentation 
+emoji: 🚧
 sdk: docker
 pinned: false
 license: other
